@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { Counter } from "./Counter";
 
-const MotionLink = motion(Link);
+const MotionLink = motion.create(Link);
 
 function MagneticLink({ children, href, className }: { children: React.ReactNode, href: string, className: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
