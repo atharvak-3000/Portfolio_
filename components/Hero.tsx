@@ -50,9 +50,6 @@ export default function Hero() {
   const headlineWords = "Full-Stack Dev".split(" ");
   const accentWords = "& AI Builder.".split(" ");
 
-  // Running character counter for global stagger delays
-  let charCounter = 0;
-
   const floatingElements = [
     {
       // Top-left Rotated Card
@@ -167,13 +164,14 @@ export default function Hero() {
 
         {/* Headline with Staggered Retro Arcade Character-by-Character Pop Animation */}
         <h1 className="font-heading text-5xl sm:text-6xl md:text-[90px] font-extrabold leading-[1.05] tracking-tight mb-8">
-          <div className="flex flex-wrap justify-center gap-x-[0.25em]">
+          <span className="flex flex-wrap justify-center gap-x-[0.25em] mb-4">
             {headlineWords.map((word, wIdx) => {
               const chars = word.split("");
+              const precedingLength = headlineWords.slice(0, wIdx).reduce((acc, w) => acc + w.length, 0);
               return (
                 <span key={wIdx} className="inline-flex">
                   {chars.map((char, cIdx) => {
-                    const globalIdx = charCounter++;
+                    const globalIdx = precedingLength + cIdx;
                     return (
                       <motion.span
                         key={cIdx}
@@ -194,55 +192,59 @@ export default function Hero() {
                 </span>
               );
             })}
-          </div>
+          </span>
 
-          <div className="flex flex-wrap justify-center gap-x-[0.25em] text-[var(--accent)]">
-            {accentWords.map((word, wIdx) => {
-              const chars = word.split("");
-              return (
-                <span key={wIdx} className="inline-flex">
-                  {chars.map((char, cIdx) => {
-                    const globalIdx = charCounter++;
-                    return (
-                      <motion.span
-                        key={cIdx}
-                        initial={{ opacity: 0, y: 35, scale: 0.7 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 400,
-                          damping: 14,
-                          delay: globalIdx * 0.03,
-                        }}
-                        className="inline-block origin-bottom"
-                      >
-                        {char}
-                      </motion.span>
-                    );
-                  })}
-                </span>
-              );
-            })}
-          </div>
+          <span className="flex flex-wrap justify-center gap-x-[0.25em] text-[var(--accent)] relative">
+            <span className="relative inline-flex flex-wrap justify-center gap-x-[0.25em]">
+              {accentWords.map((word, wIdx) => {
+                const chars = word.split("");
+                const precedingLength = accentWords.slice(0, wIdx).reduce((acc, w) => acc + w.length, 0);
+                const headlineLength = headlineWords.reduce((acc, w) => acc + w.length, 0);
+                return (
+                  <span key={wIdx} className="inline-flex">
+                    {chars.map((char, cIdx) => {
+                      const globalIdx = headlineLength + precedingLength + cIdx;
+                      return (
+                        <motion.span
+                          key={cIdx}
+                          initial={{ opacity: 0, y: 35, scale: 0.7 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          transition={{
+                            type: "spring",
+                            stiffness: 400,
+                            damping: 14,
+                            delay: globalIdx * 0.03,
+                          }}
+                          className="inline-block origin-bottom"
+                        >
+                          {char}
+                        </motion.span>
+                      );
+                    })}
+                  </span>
+                );
+              })}
+              
+              {/* Underline SVG nested relative to the accent words container */}
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ delay: 0.8, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+                className="absolute left-0 right-0 -bottom-3 h-4 origin-center flex justify-center"
+              >
+                <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-48 h-full text-[var(--accent-warm)]">
+                  <path
+                    d="M5 15 C 50 2, 150 2, 195 15 C 140 20, 60 20, 5 15"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                </svg>
+              </motion.div>
+            </span>
+          </span>
         </h1>
-
-        {/* Underline SVG */}
-        <motion.div
-          initial={{ opacity: 0, scaleX: 0 }}
-          animate={{ opacity: 1, scaleX: 1 }}
-          transition={{ delay: 0.8, duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-          className="w-48 h-4 relative -mt-6 mb-8 origin-center"
-        >
-          <svg viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-[var(--accent-warm)]">
-            <path
-              d="M5 15 C 50 2, 150 2, 195 15 C 140 20, 60 20, 5 15"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              fill="none"
-            />
-          </svg>
-        </motion.div>
 
         {/* Subtext */}
         <motion.p
