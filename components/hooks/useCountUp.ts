@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-
+import { useInView } from "framer-motion";
 
 export function useCountUp(end: number, duration: number = 2) {
   const [count, setCount] = useState(0);

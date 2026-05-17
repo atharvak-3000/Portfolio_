@@ -5,7 +5,7 @@ import { motion, useMotionValue, useSpring } from "framer-motion";
 import Link from "next/link";
 import { Counter } from "./Counter";
 
-const MotionLink = motion.create(Link);
+const MotionLink = motion(Link);
 
 function MagneticLink({ children, href, className }: { children: React.ReactNode, href: string, className: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
@@ -46,45 +46,6 @@ function MagneticLink({ children, href, className }: { children: React.ReactNode
   );
 }
 
-function MagneticCard({ children, className }: { children: React.ReactNode, className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 18, stiffness: 120, mass: 0.1 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (window.matchMedia("(max-width: 1024px)").matches) return;
-    const { clientX, clientY } = e;
-    const rect = ref.current!.getBoundingClientRect();
-    const middleX = clientX - (rect.left + rect.width / 2);
-    const middleY = clientY - (rect.top + rect.height / 2);
-    x.set(middleX * 0.35);
-    y.set(middleY * 0.35);
-  };
-
-  const reset = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={reset}
-      style={{ x: springX, y: springY }}
-      whileHover={{ scale: 1.03 }}
-      whileTap={{ scale: 0.98 }}
-      className={`cursor-pointer select-none ${className || ""}`}
-    >
-      {children}
-    </motion.div>
-  );
-}
-
 export default function Hero() {
   const headlineWords = "Full-Stack Dev".split(" ");
   const accentWords = "& AI Builder.".split(" ");
@@ -95,8 +56,7 @@ export default function Hero() {
   const floatingElements = [
     {
       // Top-left Rotated Card
-      positionClass: "top-[20%] left-[8%]",
-      cardClass: "-rotate-8 bg-zinc-900 text-white p-5 rounded-2xl shadow-xl max-w-[180px]",
+      className: "top-[20%] left-[8%] -rotate-8 bg-zinc-900 text-white p-5 rounded-2xl shadow-xl max-w-[180px]",
       content: (
         <div className="font-sans text-sm font-semibold tracking-tight">
           <div className="text-[var(--accent-warm)] text-xs uppercase tracking-wider mb-2 font-bold">Services</div>
@@ -106,8 +66,7 @@ export default function Hero() {
     },
     {
       // Top-right Mock Browser
-      positionClass: "top-[15%] right-[8%]",
-      cardClass: "rotate-3 bg-white border border-zinc-100 p-4 rounded-2xl shadow-xl w-[260px]",
+      className: "top-[15%] right-[8%] rotate-3 bg-white border border-zinc-100 p-4 rounded-2xl shadow-xl w-[260px]",
       content: (
         <div className="font-mono text-[10px] text-zinc-500">
           <div className="flex gap-1 mb-2">
@@ -125,8 +84,7 @@ export default function Hero() {
     },
     {
       // Bottom-left Stacked Tech Books
-      positionClass: "bottom-[20%] left-[10%]",
-      cardClass: "-rotate-3 bg-white border border-zinc-100 p-5 rounded-2xl shadow-xl w-[220px]",
+      className: "bottom-[20%] left-[10%] -rotate-3 bg-white border border-zinc-100 p-5 rounded-2xl shadow-xl w-[220px]",
       content: (
         <div className="font-sans">
           <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Core Stack</div>
@@ -146,15 +104,14 @@ export default function Hero() {
     },
     {
       // Bottom-right Initials Avatar Card
-      positionClass: "bottom-[18%] right-[10%]",
-      cardClass: "rotate-6 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-warm)] p-1 rounded-2xl shadow-2xl",
+      className: "bottom-[18%] right-[10%] rotate-6 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-warm)] p-1 rounded-2xl shadow-2xl",
       content: (
-        <div className="bg-white p-4 rounded-xl flex items-center gap-3">
+        <div className="bg-white dark:bg-zinc-950 p-4 rounded-xl flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center font-heading font-extrabold text-sm">
             AK
           </div>
           <div>
-            <div className="font-sans text-xs font-bold text-zinc-800">Atharva Kale</div>
+            <div className="font-sans text-xs font-bold">Atharva Kale</div>
             <div className="font-sans text-[10px] text-zinc-400">Nashik, IN</div>
           </div>
         </div>
@@ -191,11 +148,9 @@ export default function Hero() {
               delay: i * 0.8,
             }
           }}
-          className={`hidden lg:block absolute z-10 ${el.positionClass}`}
+          className={`hidden lg:block absolute z-10 ${el.className}`}
         >
-          <MagneticCard className={el.cardClass}>
-            {el.content}
-          </MagneticCard>
+          {el.content}
         </motion.div>
       ))}
 
@@ -322,6 +277,8 @@ export default function Hero() {
           <span><Counter end={10} suffix="+" /> Dashboards Built</span>
           <span className="w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
           <span><Counter end={2} /> AI Projects Shipped</span>
+          {/* <span className="w-1.5 h-1.5 rounded-full bg-zinc-300"></span>
+          <span>Microsoft Certified</span> */}
         </motion.div>
       </div>
     </section>

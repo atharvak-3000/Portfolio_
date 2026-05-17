@@ -1,16 +1,23 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent, useSpring } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, useTransform, useSpring } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function Navbar() {
   const { scrollY, scrollYProgress } = useScroll();
+  const [hidden, setHidden] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [scrolled, setScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 20);
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+    setScrolled(latest > 60);
   });
 
   const scaleX = useSpring(scrollYProgress, {
@@ -47,13 +54,16 @@ export default function Navbar() {
       
       <div className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4">
         <motion.nav
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
-          className={`flex items-center justify-between w-full max-w-3xl backdrop-blur-md border px-6 py-2.5 rounded-[50px] transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] ${
+          variants={{
+            visible: { y: 0, opacity: 1 },
+            hidden: { y: "-150%", opacity: 0 },
+          }}
+          animate={hidden ? "hidden" : "visible"}
+          transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+          className={`flex items-center justify-between w-full max-w-3xl bg-white/95 dark:bg-zinc-950/95 border border-[var(--foreground)]/5 px-6 py-2.5 rounded-[50px] transition-all duration-300 ${
             scrolled 
-              ? "scale-[0.96] bg-white/80 dark:bg-zinc-950/80 border-black/10 dark:border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.08)]" 
-              : "scale-100 bg-white/70 dark:bg-zinc-950/70 border-black/5 dark:border-white/5 shadow-[0_4px_25px_rgba(0,0,0,0.02)]"
+              ? "scale-[0.96] shadow-[0_10px_30px_rgba(0,0,0,0.12)]" 
+              : "shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
           }`}
         >
           {/* Left Avatar */}
@@ -69,12 +79,13 @@ export default function Navbar() {
               return (
                 <Link key={item} href={`#${lowerItem}`} className="relative py-1 text-[var(--foreground)] hover:text-[var(--accent)] transition-colors">
                   {item}
-                  <motion.div
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[var(--accent)] rounded-full"
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  />
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-dot-redesign"
+                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[var(--accent)] rounded-full"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
                 </Link>
               );
             })}
