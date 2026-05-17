@@ -84,3 +84,18 @@ html {
 .service-cta-link:hover::after {
   width: 100%;
 }
+
+@keyframes page-load-sweep {
+  0% { transform: scaleY(1); }
+  100% { transform: scaleY(0); }
+}
+
+.page-load-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--accent);
+  transform-origin: bottom;
+  animation: page-load-sweep 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  pointer-events: none;
+}

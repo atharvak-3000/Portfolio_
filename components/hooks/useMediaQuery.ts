@@ -6,12 +6,13 @@ export function useMediaQuery(query: string) {
   useEffect(() => {
     const media = window.matchMedia(query);
     
-    const listener = () => setMatches(media.matches);
-    // Initial check
-    listener();
+    // Set initial state
+    setMatches(media.matches);
     
-    window.addEventListener('resize', listener);
-    return () => window.removeEventListener('resize', listener);
+    const listener = (e: MediaQueryListEvent) => setMatches(e.matches);
+    
+    media.addEventListener('change', listener);
+    return () => media.removeEventListener('change', listener);
   }, [query]);
 
   return matches;

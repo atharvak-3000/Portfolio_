@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { motion, useMotionValue, useSpring, AnimatePresence, useTransform } from "framer-motion";
 
 export default function GlobalProviders({ children }: { children: React.ReactNode }) {
-  const [isReady, setIsReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
   // Custom cursor state
@@ -25,11 +24,6 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
-
-
-
-    // Page ready
-    setIsReady(true);
 
     // Cursor tracking
     const moveCursor = (e: MouseEvent) => {
@@ -63,17 +57,8 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
 
   return (
     <>
-      {/* Page Load Sweep */}
-      <AnimatePresence>
-        {!isReady && (
-          <motion.div
-            initial={{ scaleY: 1 }}
-            exit={{ scaleY: 0 }}
-            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-            className="fixed inset-0 z-[100] bg-[var(--accent)] origin-bottom"
-          />
-        )}
-      </AnimatePresence>
+      {/* Page Load Sweep (Fail-safe Pure CSS transition) */}
+      <div className="page-load-overlay" />
 
       {/* Custom Cursor */}
       {!isMobile && (
