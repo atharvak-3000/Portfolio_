@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useMotionValueEvent, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, useSpring } from "framer-motion";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 

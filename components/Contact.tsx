@@ -36,7 +36,16 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-function MagneticButton({ children, className, onClick, href, target, rel }: any) {
+interface MagneticButtonProps {
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  href?: string;
+  target?: string;
+  rel?: string;
+}
+
+function MagneticButton({ children, className, onClick, href, target, rel }: MagneticButtonProps) {
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const [isMobile, setIsMobile] = useState(false);
   const x = useMotionValue(0);
@@ -69,6 +78,7 @@ function MagneticButton({ children, className, onClick, href, target, rel }: any
 
   return (
     <Component
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ref={ref as any}
       href={href}
       target={target}
