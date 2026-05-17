@@ -17,6 +17,10 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
   const cursorX = useSpring(mouseX, springConfig);
   const cursorY = useSpring(mouseY, springConfig);
 
+  // Unconditional top-level hooks to prevent React hook count mismatch crashes
+  const cursorBg = useTransform(cursorBorder, [0, 1], ["var(--accent)", "transparent"]);
+  const cursorOutline = useTransform(cursorBorder, [0, 1], ["none", "2px solid var(--accent)"]);
+
   useEffect(() => {
     // Check if mobile
     const checkMobile = () => {
@@ -70,8 +74,8 @@ export default function GlobalProviders({ children }: { children: React.ReactNod
             width: cursorSize,
             height: cursorSize,
             opacity: cursorOpacity,
-            backgroundColor: useTransform(cursorBorder, [0, 1], ["var(--accent)", "transparent"]),
-            border: useTransform(cursorBorder, [0, 1], ["none", "2px solid var(--accent)"]),
+            backgroundColor: cursorBg,
+            border: cursorOutline,
           }}
         />
       )}
