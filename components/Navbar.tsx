@@ -69,13 +69,12 @@ export default function Navbar() {
               return (
                 <Link key={item} href={`#${lowerItem}`} className="relative py-1 text-[var(--foreground)] hover:text-[var(--accent)] transition-colors">
                   {item}
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-dot-redesign"
-                      className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[var(--accent)] rounded-full"
-                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                    />
-                  )}
+                  <motion.div
+                    initial={{ scale: 0, opacity: 0 }}
+                    animate={{ scale: isActive ? 1 : 0, opacity: isActive ? 1 : 0 }}
+                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-[var(--accent)] rounded-full"
+                    transition={{ duration: 0.2, ease: "easeOut" }}
+                  />
                 </Link>
               );
             })}

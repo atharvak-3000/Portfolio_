@@ -149,12 +149,12 @@ export default function Hero() {
       positionClass: "bottom-[18%] right-[10%]",
       cardClass: "rotate-6 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-warm)] p-1 rounded-2xl shadow-2xl",
       content: (
-        <div className="bg-white dark:bg-zinc-950 p-4 rounded-xl flex items-center gap-3">
+        <div className="bg-white p-4 rounded-xl flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center font-heading font-extrabold text-sm">
             AK
           </div>
           <div>
-            <div className="font-sans text-xs font-bold">Atharva Kale</div>
+            <div className="font-sans text-xs font-bold text-zinc-800">Atharva Kale</div>
             <div className="font-sans text-[10px] text-zinc-400">Nashik, IN</div>
           </div>
         </div>
