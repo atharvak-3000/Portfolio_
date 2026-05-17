@@ -63,7 +63,7 @@ export default function Navbar() {
           }}
           animate={hidden ? "hidden" : "visible"}
           transition={{ duration: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
-          className={`flex items-center justify-between w-full max-w-3xl bg-white/95 dark:bg-zinc-950/95 border border-[var(--foreground)]/5 px-6 py-2.5 rounded-[50px] transition-all duration-300 ${
+          className={`flex items-center justify-between w-full max-w-3xl bg-white/95 border border-zinc-200/50 px-6 py-2.5 rounded-[50px] transition-all duration-300 ${
             scrolled 
               ? "scale-[0.96] shadow-[0_10px_30px_rgba(0,0,0,0.12)]" 
               : "shadow-[0_4px_20px_rgba(0,0,0,0.06)]"
@@ -80,7 +80,7 @@ export default function Navbar() {
               const lowerItem = item.toLowerCase();
               const isActive = activeSection === lowerItem;
               return (
-                <Link key={item} href={`#${lowerItem}`} className="relative py-1 text-[var(--foreground)] hover:text-[var(--accent)] transition-colors">
+                <Link key={item} href={`#${lowerItem}`} className="relative py-1 text-zinc-700 hover:text-[var(--accent)] font-semibold transition-colors">
                   {item}
                   {isActive && (
                     <motion.div
@@ -122,7 +122,7 @@ export default function Navbar() {
               transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
               className="w-full max-w-3xl mt-3 md:hidden z-40"
             >
-              <div className="bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border border-zinc-100 dark:border-zinc-900 rounded-[28px] p-6 shadow-2xl flex flex-col gap-4">
+              <div className="bg-white/95 backdrop-blur-md border border-zinc-100 rounded-[28px] p-6 shadow-2xl flex flex-col gap-4">
                 {["Services", "Projects", "About", "Reviews"].map((item) => {
                   const lowerItem = item.toLowerCase();
                   const isActive = activeSection === lowerItem;
@@ -134,7 +134,7 @@ export default function Navbar() {
                       className={`flex items-center justify-between py-2.5 px-4 rounded-xl text-base font-semibold transition-colors ${
                         isActive
                           ? "bg-[var(--accent)]/5 text-[var(--accent)]"
-                          : "text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-900"
+                          : "text-zinc-700 hover:bg-zinc-50"
                       }`}
                     >
                       <span>{item}</span>
