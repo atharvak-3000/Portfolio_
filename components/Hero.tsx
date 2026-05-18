@@ -7,6 +7,44 @@ import { Counter } from "./Counter";
 
 const MotionLink = motion(Link);
 
+function Magnetic({ children, range = 0.25, className = "", style = {} }: { children: React.ReactNode, range?: number, className?: string, style?: any }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 15, stiffness: 150, mass: 0.1 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (window.matchMedia("(max-width: 768px)").matches) return;
+    const { clientX, clientY } = e;
+    if (!ref.current) return;
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const middleX = clientX - (left + width / 2);
+    const middleY = clientY - (top + height / 2);
+    x.set(middleX * range);
+    y.set(middleY * range);
+  };
+
+  const reset = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={reset}
+      style={{ ...style, x: springX, y: springY }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 function MagneticLink({ children, href, className }: { children: React.ReactNode, href: string, className: string }) {
   const ref = useRef<HTMLAnchorElement>(null);
   const x = useMotionValue(0);
@@ -53,7 +91,8 @@ export default function Hero() {
   const floatingElements = [
     {
       // Top-left Rotated Card
-      className: "top-[20%] left-[8%] -rotate-8 bg-zinc-900 text-white p-5 rounded-2xl shadow-xl max-w-[180px]",
+      layoutClass: "top-[20%] left-[8%] max-w-[180px]",
+      cardClass: "-rotate-8 bg-zinc-900 text-white p-5 rounded-2xl shadow-xl w-full cursor-pointer select-none",
       content: (
         <div className="font-sans text-sm font-semibold tracking-tight">
           <div className="text-[var(--accent-warm)] text-xs uppercase tracking-wider mb-2 font-bold">Services</div>
@@ -63,7 +102,8 @@ export default function Hero() {
     },
     {
       // Top-right Mock Browser
-      className: "top-[15%] right-[8%] rotate-3 bg-white border border-zinc-100 p-4 rounded-2xl shadow-xl w-[260px]",
+      layoutClass: "top-[15%] right-[8%] w-[260px]",
+      cardClass: "rotate-3 bg-white border border-zinc-100 p-4 rounded-2xl shadow-xl w-full cursor-pointer select-none",
       content: (
         <div className="font-mono text-[10px] text-zinc-500">
           <div className="flex gap-1 mb-2">
@@ -81,7 +121,8 @@ export default function Hero() {
     },
     {
       // Bottom-left Stacked Tech Books
-      className: "bottom-[20%] left-[10%] -rotate-3 bg-white border border-zinc-100 p-5 rounded-2xl shadow-xl w-[220px]",
+      layoutClass: "bottom-[20%] left-[10%] w-[220px]",
+      cardClass: "-rotate-3 bg-white border border-zinc-100 p-5 rounded-2xl shadow-xl w-full cursor-pointer select-none",
       content: (
         <div className="font-sans">
           <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest mb-3">Core Stack</div>
@@ -101,14 +142,15 @@ export default function Hero() {
     },
     {
       // Bottom-right Initials Avatar Card
-      className: "bottom-[18%] right-[10%] rotate-6 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-warm)] p-1 rounded-2xl shadow-2xl",
+      layoutClass: "bottom-[18%] right-[10%] w-[210px]",
+      cardClass: "rotate-6 bg-gradient-to-tr from-[var(--accent)] to-[var(--accent-warm)] p-1 rounded-2xl shadow-2xl w-full cursor-pointer select-none",
       content: (
-        <div className="bg-white dark:bg-zinc-950 p-4 rounded-xl flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[var(--accent)]/10 text-[var(--accent)] flex items-center justify-center font-heading font-extrabold text-sm">
+        <div className="bg-zinc-950 p-4 rounded-xl flex items-center gap-3 text-white">
+          <div className="w-10 h-10 rounded-full bg-[var(--accent)]/15 text-[var(--accent)] flex items-center justify-center font-heading font-extrabold text-sm shrink-0">
             AK
           </div>
           <div>
-            <div className="font-sans text-xs font-bold">Atharva Kale</div>
+            <div className="font-sans text-xs font-bold text-white">Atharva Kale</div>
             <div className="font-sans text-[10px] text-zinc-400">Nashik, IN</div>
           </div>
         </div>
@@ -145,9 +187,11 @@ export default function Hero() {
               delay: i * 0.8,
             }
           }}
-          className={`hidden lg:block absolute z-10 ${el.className}`}
+          className={`hidden lg:block absolute z-10 ${el.layoutClass}`}
         >
-          {el.content}
+          <Magnetic range={0.3} className={el.cardClass}>
+            {el.content}
+          </Magnetic>
         </motion.div>
       ))}
 

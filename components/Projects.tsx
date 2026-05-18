@@ -40,7 +40,7 @@ const projects: Project[] = [
       "Leverages Gemini API stream processing for real-time output."
     ],
     techTags: ["Next.js", "Gemini API", "Clerk"],
-    links: { live: "#", github: "#" },
+    links: { live: "https://audioscribemeet.netlify.app/", github: "#" },
     mockVisual: (
       <div className="w-full bg-zinc-900 rounded-xl overflow-hidden shadow-2xl border border-zinc-800">
         <div className="bg-zinc-800 px-4 py-2.5 flex items-center gap-1.5 border-b border-zinc-700">
@@ -82,7 +82,7 @@ const projects: Project[] = [
       "Improves applicant callbacks using localized suggestions."
     ],
     techTags: ["React", "Tailwind", "AI"],
-    links: { live: "#", github: "#" },
+    links: { live: "https://skillsenseanalyzer.netlify.app/", github: "#" },
     mockVisual: (
       <div className="w-full bg-white rounded-xl overflow-hidden shadow-2xl border border-zinc-100">
         <div className="bg-zinc-50 px-4 py-2.5 flex items-center gap-1.5 border-b border-zinc-100">
@@ -111,6 +111,50 @@ const projects: Project[] = [
               <span className="text-[10px]">⚠️</span>
               <div className="h-2 w-11/12 bg-zinc-100 rounded" />
             </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+  {
+    title: "StayNest",
+    tag: "Full-Stack Web Dev",
+    bg: "#FFF0EC",
+    textColor: "#5D1F11",
+    description: "Vacation rental and accommodation booking platform styled with fully-featured listings.",
+    bullets: [
+      "Allows seamless property searching, filtering, and reservation booking.",
+      "Supports host dashboards for detailed property listing and booking analytics.",
+      "Implements premium rating, reviews, and responsive image galleries."
+    ],
+    techTags: ["Node.js", "Express", "MongoDB", "Tailwind"],
+    links: { live: "https://staynest-2gcg.onrender.com/listings", github: "#" },
+    mockVisual: (
+      <div className="w-full bg-white rounded-xl overflow-hidden shadow-2xl border border-zinc-100">
+        <div className="bg-zinc-50 px-4 py-2.5 flex items-center gap-1.5 border-b border-zinc-100">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-yellow-400" />
+          <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
+          <div className="flex-grow flex justify-center">
+            <div className="bg-white text-[8px] text-zinc-400 border border-zinc-100 rounded px-4 py-0.5 max-w-[120px] truncate">staynest.onrender.com/listings</div>
+          </div>
+        </div>
+        <div className="p-3 font-sans text-left text-zinc-800">
+          <div className="relative w-full h-24 bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg mb-2 overflow-hidden flex items-center justify-center">
+            <span className="text-3xl">🏡</span>
+            <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-xs text-[7px] font-bold text-orange-600 px-1.5 py-0.5 rounded-full">★ 4.92</div>
+          </div>
+          <div className="flex justify-between items-start mb-1">
+            <div className="h-2 w-2/3 bg-zinc-200 rounded" />
+            <div className="h-2 w-1/4 bg-zinc-100 rounded" />
+          </div>
+          <div className="space-y-1 mb-2">
+            <div className="h-1.5 w-1/2 bg-zinc-100 rounded" />
+            <div className="h-1.5 w-1/3 bg-zinc-100 rounded" />
+          </div>
+          <div className="border-t border-zinc-100 pt-2 flex justify-between items-center">
+            <div className="h-2 w-1/4 bg-orange-100 rounded" />
+            <div className="h-4 w-12 bg-[var(--accent-warm)] text-white text-[7px] font-bold flex items-center justify-center rounded-full">Book Now</div>
           </div>
         </div>
       </div>
@@ -160,8 +204,8 @@ function ProjectStackCard({ project, index, total, scrollYProgress }: { project:
         zIndex: index + 1,
         transformOrigin: 'top center',
         borderRadius: '24px',
-        padding: '3rem',
-        minHeight: '400px',
+        padding: '2.25rem 2.5rem',
+        minHeight: '390px',
         backgroundColor: project.bg,
         border: '1px solid rgba(0,0,0,0.06)',
         display: 'flex',
@@ -170,7 +214,7 @@ function ProjectStackCard({ project, index, total, scrollYProgress }: { project:
         willChange: 'transform',
       }}
     >
-      <div style={{ maxWidth: '500px', flex: 1, paddingRight: '2rem' }}>
+      <div style={{ maxWidth: '480px', flex: 1, paddingRight: '2rem' }}>
         <div>
           <span style={{
             display: 'inline-block',
@@ -189,29 +233,29 @@ function ProjectStackCard({ project, index, total, scrollYProgress }: { project:
         </div>
         <h3 style={{
           fontFamily: 'Playfair Display, serif',
-          fontSize: '3rem',
-          marginTop: '1rem',
-          marginBottom: '1rem',
+          fontSize: '2.25rem',
+          marginTop: '0.75rem',
+          marginBottom: '0.75rem',
           fontWeight: 800,
           color: project.textColor,
           lineHeight: 1.1,
         }}>
           {project.title}
         </h3>
-        <p style={{ color: '#444', fontSize: '1.05rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+        <p style={{ color: '#444', fontSize: '1rem', lineHeight: 1.6, marginBottom: '1rem' }}>
           {project.description}
         </p>
 
-        <ul style={{ marginBottom: '1.5rem', listStyle: 'none', padding: 0 }}>
+        <ul style={{ marginBottom: '1rem', listStyle: 'none', padding: 0 }}>
           {project.bullets.map((bullet: string, i: number) => (
-            <li key={i} style={{ display: 'flex', gap: '0.5rem', color: '#555', fontSize: '0.9rem', marginBottom: '0.5rem' }}>
+            <li key={i} style={{ display: 'flex', gap: '0.5rem', color: '#555', fontSize: '0.9rem', marginBottom: '0.4rem' }}>
               <span style={{ color: 'var(--accent)' }}>•</span>
               <span>{bullet}</span>
             </li>
           ))}
         </ul>
 
-        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem' }}>
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
           {project.techTags.map((tech: string, i: number) => (
             <span key={i} style={{
               background: 'rgba(255,255,255,0.6)',
@@ -262,7 +306,7 @@ function ProjectStackCard({ project, index, total, scrollYProgress }: { project:
         </div>
       </div>
 
-      <div style={{ width: '320px', flexShrink: 0 }}>
+      <div style={{ width: '300px', flexShrink: 0 }}>
         {project.mockVisual}
       </div>
     </motion.div>
@@ -456,7 +500,7 @@ export default function Projects() {
             </h2>
           </div>
 
-          <div style={{ position: 'relative', width: '100%', maxWidth: '900px', height: '480px' }}>
+          <div style={{ position: 'relative', width: '100%', maxWidth: '900px', height: '510px' }}>
             <motion.div style={{
               position: 'absolute',
               top: '-2.5rem',

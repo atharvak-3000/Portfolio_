@@ -189,7 +189,7 @@ export default function Contact() {
           className="flex justify-center gap-8"
         >
           <a
-            href="https://linkedin.com/in/atharvakale"
+            href="https://www.linkedin.com/in/atharvak3000/"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-zinc-900 border border-zinc-800 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all rounded-full"
@@ -198,7 +198,7 @@ export default function Contact() {
             <LinkedinIcon className="w-6 h-6" />
           </a>
           <a
-            href="https://github.com/atharvakale"
+            href="https://github.com/atharvak-3000"
             target="_blank"
             rel="noopener noreferrer"
             className="p-3 bg-zinc-900 border border-zinc-800 hover:border-[var(--accent)] hover:text-[var(--accent)] transition-all rounded-full"

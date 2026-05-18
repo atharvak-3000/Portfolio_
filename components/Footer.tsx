@@ -11,7 +11,7 @@ export default function Footer() {
         </h3>
         <div className="flex gap-4 text-xs font-bold uppercase tracking-wider text-zinc-400">
           <a
-            href="https://linkedin.com/in/atharvakale"
+            href="https://www.linkedin.com/in/atharvak3000/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--accent)] transition-colors"
@@ -20,7 +20,7 @@ export default function Footer() {
           </a>
           <span className="text-zinc-300">•</span>
           <a
-            href="https://github.com/atharvakale"
+            href="https://github.com/atharvak-3000"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-[var(--accent)] transition-colors"
